@@ -1,0 +1,18 @@
+.items-container {
+  display: flex;
+
+  border: 2px solid black;
+  margin: 10px;
+  width: 99vw;
+}
+.list-items {
+  border: 2px solid black;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.inItemsArea {
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+}
