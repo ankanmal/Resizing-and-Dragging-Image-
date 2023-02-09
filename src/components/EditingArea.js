@@ -94,6 +94,14 @@ const EditingArea = ({ images, updateEditingState }) => {
         console.log("stop resize called");
         currentHandler.current = false;
         window.removeEventListener("mouseup", stopResize);
+        const obj = {
+          index: div,
+          height: element.style.height,
+          width: element.style.width,
+          top: element.style.top,
+          left: element.style.left,
+        };
+        updateEditingState(obj);
       };
     }
   }
