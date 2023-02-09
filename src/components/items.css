@@ -15,4 +15,18 @@
   width: 150px;
   height: 150px;
   margin: 20px;
+  cursor: grabbing;
+  position: absolute;
+}
+#resizer1 {
+  top: 70px;
+}
+#resizer2 {
+  top: 240px;
+}
+#resizer3 {
+  top: 420px;
+}
+#resizer4 {
+  top: 580px;
 }

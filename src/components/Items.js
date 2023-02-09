@@ -11,7 +11,67 @@ const Items = () => {
 
   // console.log(itemsArray);
   const [editing, setEditing] = useState([]);
+
   //console.log(editing);
+  const DraggElement = (e, elem, resizer) => {
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    let rect = 0;
+    let thresholdCrossed = false;
+    const element = document.getElementById(resizer);
+    console.log(element);
+
+    rect = element.getBoundingClientRect();
+
+    initialX = e.clientX - xOffset;
+    //initialX = original.left;
+    initialY = e.clientY - yOffset;
+    //initialY = original.top;
+
+    isDragging = true;
+    function setTopLeft(xPos, yPos, el) {
+      el.style.top = yPos + "px";
+      el.style.left = xPos + "px";
+    }
+
+    function drag(e) {
+      if (isDragging) {
+        e.preventDefault();
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+
+        xOffset = currentX;
+        yOffset = currentY;
+        const top = rect.top + currentY;
+
+        const left = rect.left + currentX;
+
+        setTopLeft(left, top, element);
+        if (left > 410 && !thresholdCrossed) {
+          console.log("true");
+          sendDataToChildren(elem);
+          thresholdCrossed = true;
+        }
+      }
+    }
+
+    function dragEnd() {
+      isDragging = false;
+      if (thresholdCrossed) {
+        setTopLeft(rect.left, rect.top, element);
+      }
+      thresholdCrossed = false;
+      // window.removeEventListener("mousemove", drag);
+      //window.removeEventListener("mouseup", dragEnd);
+    }
+    window.addEventListener("mouseup", dragEnd);
+    window.addEventListener("mousemove", drag);
+  };
   const sendDataToChildren = (e) => {
     console.log(countRef.current);
     setEditing((prevEditing) => [
@@ -38,15 +98,20 @@ const Items = () => {
       <div className="items-container">
         <div className="list-items">
           <h1>collection of images and svg</h1>
-          {itemsArray.map((e) => {
+          {itemsArray.map((ele, index) => {
             return (
               <div
                 className=" inItemsArea"
-                key={e?.id}
-                onClick={() => sendDataToChildren(e)}
+                id={ele?.id}
+                key={ele?.id}
+                onMouseDown={(e) => {
+                  //sendDataToChildren(e)
+                  DraggElement(e, ele, ele?.id);
+                }}
+                style={{ top: `10+${index}px` }}
               >
                 <img
-                  src={e?.imgUrl}
+                  src={ele?.imgUrl}
                   style={{ width: "100%", display: "block", height: "100%" }}
                 />
               </div>

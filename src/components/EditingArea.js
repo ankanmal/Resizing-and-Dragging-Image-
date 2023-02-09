@@ -3,7 +3,7 @@ import "./editingarea.css";
 const EditingArea = ({ images, updateEditingState }) => {
   const currentHandler = useRef(false);
 
-  function makeResizableDiv(div, top, left) {
+  function makeResizableDiv(e, div, top, left) {
     const hel = "resizable" + div;
     console.log(hel);
     const element = document.getElementById(hel);
@@ -119,6 +119,7 @@ const EditingArea = ({ images, updateEditingState }) => {
               key={ele?.id}
               onMouseDown={(e) =>
                 makeResizableDiv(
+                  e,
                   ele?.index,
                   ele?.top,
                   ele?.left,
