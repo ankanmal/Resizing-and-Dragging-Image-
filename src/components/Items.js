@@ -66,8 +66,8 @@ const Items = () => {
         setTopLeft(rect.left, rect.top, element);
       }
       thresholdCrossed = false;
-      // window.removeEventListener("mousemove", drag);
-      //window.removeEventListener("mouseup", dragEnd);
+      window.removeEventListener("mousemove", drag);
+      window.removeEventListener("mouseup", dragEnd);
     }
     window.addEventListener("mouseup", dragEnd);
     window.addEventListener("mousemove", drag);

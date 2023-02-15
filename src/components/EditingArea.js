@@ -1,9 +1,6 @@
-import { useRef } from "react";
 import "./editingarea.css";
 const EditingArea = ({ images, updateEditingState }) => {
-  const currentHandler = useRef(false);
-
-  function makeResizableDiv(e, div, top, left) {
+  function makeResizableDiv(div, top, left) {
     const hel = "resizable" + div;
     console.log(hel);
     const element = document.getElementById(hel);
@@ -20,7 +17,6 @@ const EditingArea = ({ images, updateEditingState }) => {
       console.log(currentResizer);
       currentResizer.addEventListener("mousedown", function (e) {
         e.preventDefault();
-        // isAnyResizerMouseDown = true;
         original_width = parseFloat(
           getComputedStyle(element, null)
             .getPropertyValue("width")
@@ -88,11 +84,8 @@ const EditingArea = ({ images, updateEditingState }) => {
       };
 
       const stopResize = () => {
-        const original = element.getBoundingClientRect();
-        console.log(original);
         window.removeEventListener("mousemove", resize);
         console.log("stop resize called");
-        currentHandler.current = false;
         window.removeEventListener("mouseup", stopResize);
         const obj = {
           index: div,
@@ -118,13 +111,7 @@ const EditingArea = ({ images, updateEditingState }) => {
               id={"resizable" + index}
               key={ele?.id}
               onMouseDown={(e) =>
-                makeResizableDiv(
-                  e,
-                  ele?.index,
-                  ele?.top,
-                  ele?.left,
-                  (currentHandler.current = true)
-                )
+                makeResizableDiv(ele?.index, ele?.top, ele?.left)
               }
               style={{
                 top: `${ele?.top}px`,
@@ -138,46 +125,10 @@ const EditingArea = ({ images, updateEditingState }) => {
                 style={{ width: "100%", display: "block", height: "100%" }}
               />
               <div className="resizers">
-                <div
-                  className="resizer top-left"
-                  // onMouseDown={(e) =>
-                  //   makeResizableDiv(
-                  //     ele?.index,
-                  //     (currentHandler.current = true)
-                  //   )
-                  // }
-                  ref={currentHandler}
-                ></div>
-                <div
-                  className="resizer top-right"
-                  // onMouseDown={(e) =>
-                  //   makeResizableDiv(
-                  //     ele?.index,
-                  //     (currentHandler.current = true)
-                  //   )
-                  // }
-                  ref={currentHandler}
-                ></div>
-                <div
-                  className="resizer bottom-left"
-                  // onMouseDown={(e) =>
-                  //   makeResizableDiv(
-                  //     ele?.index,
-                  //     (currentHandler.current = true)
-                  //   )
-                  // }
-                  ref={currentHandler}
-                ></div>
-                <div
-                  className="resizer bottom-right"
-                  // onMouseDown={(e) =>
-                  //   makeResizableDiv(
-                  //     ele?.index,
-                  //     (currentHandler.current = true)
-                  //   )
-                  // }
-                  ref={currentHandler}
-                ></div>
+                <div className="resizer top-left"></div>
+                <div className="resizer top-right"></div>
+                <div className="resizer bottom-left"></div>
+                <div className="resizer bottom-right"></div>
               </div>
             </div>
           );
