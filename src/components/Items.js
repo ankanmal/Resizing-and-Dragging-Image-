@@ -108,7 +108,7 @@ const Items = () => {
                   //sendDataToChildren(e)
                   DraggElement(e, ele, ele?.id);
                 }}
-                style={{ top: `10+${index}px` }}
+                //style={{ top: `10+${index}px` }}
               >
                 <img
                   src={ele?.imgUrl}
